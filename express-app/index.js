@@ -2,6 +2,8 @@ const express = require('express');
 const loggingMiddleware = require('./middleware/logging');
 const errorHandler = require('./middleware/errorHandler');
 const authRoutes = require('./routes/auth');
+const weatherRoutes = require('./routes/weather');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +17,13 @@ app.use(express.json());
 
 // Custom logging middleware
 app.use(loggingMiddleware);
+
+// CORS middleware to allow requests from the frontend
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 
 // ============================================
 // ROUTES
@@ -31,6 +40,9 @@ app.get('/health', (req, res) => {
 
 // Authentication routes
 app.use('/auth', authRoutes);
+
+// Weather endpoint (no auth required)
+app.use('/weather', weatherRoutes);
 
 // ============================================
 // ERROR HANDLING
@@ -64,6 +76,7 @@ Available Endpoints:
 - POST /auth/signup      (register new user)
 - POST /auth/login       (authenticate user)
 - GET  /auth/users       (list all users)
+- GET  /weather          (dummy weather data)
 
 Data Storage: users.json (JSON file)
   `);
