@@ -6,12 +6,18 @@ import { FeatureTwo } from "@/features/feature-two/feature-two";
 import { FeatureOne } from "@/features/feature-one/feature-one";
 import LoggingMiddleware from "./middleware/route-logging-middleware";
 import { routeLoader } from "./loader/route-loader";
+import { paths } from "@/config/paths";
+import RegisterRoute from "./routes/auth/register";
 
 const createAppRouter = () => {
   return createBrowserRouter([
     {
       path: "/",
       Component: LandingRoute,
+    },
+    {
+      path: paths.auth.register.path,
+      Component: RegisterRoute,
     },
     {
       path: "app",
