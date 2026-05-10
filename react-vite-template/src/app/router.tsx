@@ -8,6 +8,15 @@ import LoggingMiddleware from "./middleware/route-logging-middleware";
 import { routeLoader } from "./loader/route-loader";
 import { paths } from "@/config/paths";
 import RegisterRoute from "./routes/auth/register";
+import LoginRoute from "./routes/auth/login";
+import { ProtectedRoute } from "@/lib/auth";
+
+const ProtectedAppRoot = () => (
+  // component composition
+  <ProtectedRoute>
+    <AppRoot />
+  </ProtectedRoute>
+);
 
 const createAppRouter = () => {
   return createBrowserRouter([
@@ -20,8 +29,12 @@ const createAppRouter = () => {
       Component: RegisterRoute,
     },
     {
+      path: paths.auth.login.path,
+      Component: LoginRoute,
+    },
+    {
       path: "app",
-      Component: AppRoot,
+      Component: ProtectedAppRoot,
       middleware: [LoggingMiddleware], // middleware applied to all child routes and cascades top down
       children: [
         {

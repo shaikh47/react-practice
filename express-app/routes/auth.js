@@ -9,7 +9,7 @@ const router = express.Router();
  *
  * Expected body:
  * {
- *   "username": "john_doe",
+ *   "email": "john@example.com",
  *   "password": "securePassword123",
  *   "role": "user" (optional, default: "user", allowed: "user" or "admin")
  * }
@@ -18,18 +18,18 @@ const router = express.Router();
  * {
  *   "success": true,
  *   "message": "User registered successfully",
- *   "user": { "id": "...", "username": "john_doe", "role": "user", "createdAt": "..." }
+ *   "user": { "id": "...", "email": "john@example.com", "role": "user", "createdAt": "..." }
  * }
  */
-router.post('/signup', async (req, res, next) => {
+router.post('/register', async (req, res, next) => {
   try {
-    const { username, password, role = 'user' } = req.body;
+    const { firstName, lastName, email, password, role = 'user' } = req.body;
 
     // Validate input
-    if (!username || !password) {
+    if (!email || !password) {
       return res.status(400).json({
         success: false,
-        message: 'Username and password are required',
+        message: 'Email and password are required',
       });
     }
 
@@ -51,7 +51,7 @@ router.post('/signup', async (req, res, next) => {
     }
 
     // Create the user with role
-    const user = await createUser(username, password, role);
+    const user = await createUser(email, password, firstName, lastName, role);
 
     res.status(201).json({
       success: true,
@@ -69,7 +69,7 @@ router.post('/signup', async (req, res, next) => {
  *
  * Expected body:
  * {
- *   "username": "john_doe",
+ *   "email": "john@example.com",
  *   "password": "securePassword123"
  * }
  *
@@ -77,8 +77,8 @@ router.post('/signup', async (req, res, next) => {
  * {
  *   "success": true,
  *   "message": "Login successful",
- *   "token": "jd_12345678",
- *   "user": { "id": "...", "username": "john_doe", ... }
+ *   "token": "john@example.com_12345678",
+ *   "user": { "id": "...", "email": "john@example.com", ... }
  * }
  *
  * Response (on failure):
@@ -89,18 +89,18 @@ router.post('/signup', async (req, res, next) => {
  */
 router.post('/login', async (req, res, next) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     // Validate input
-    if (!username || !password) {
+    if (!email || !password) {
       return res.status(400).json({
         success: false,
-        message: 'Username and password are required',
+        message: 'Email and password are required',
       });
     }
 
     // Validate user credentials
-    const user = await validateUser(username, password);
+    const user = await validateUser(email, password);
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -109,8 +109,8 @@ router.post('/login', async (req, res, next) => {
     }
 
     // Create a simple token (for learning purposes)
-    // Format: username_timestamp
-    const token = `${username}_${Date.now()}`;
+    // Format: email_timestamp
+    const token = `${email}_${Date.now()}`;
 
     res.json({
       success: true,

@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "1778400084289",
+    "email": "omarshaikh47@gmail.com",
+    "firstName": "omar",
+    "lastName": "shaikh",
+    "password": "$2b$10$Z.PGdluNNYQ6ne1QAVDiYehlq3Bf65AsUR1LVCUospfCpbZqo1rE6",
+    "role": "user",
+    "createdAt": "2026-05-10T08:01:24.289Z"
+  }
+]

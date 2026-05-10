@@ -308,7 +308,7 @@ const users = await getAllUsers(); // passwords excluded
 **Signup:**
 
 ```bash
-curl -X POST http://localhost:3000/auth/signup \
+curl -X POST http://localhost:3000/auth/register \
   -H "Content-Type: application/json" \
   -d '{"username":"john_doe","password":"securePassword123"}'
 ```

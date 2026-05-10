@@ -74,7 +74,7 @@ app.listen(PORT, () => {
 
 Available Endpoints:
 - GET  /health           (health check)
-- POST /auth/signup      (register new user)
+- POST /auth/register      (register new user)
 - POST /auth/login       (authenticate user)
 - GET  /auth/users       (list all users)
 - GET  /weather          (dummy weather data)

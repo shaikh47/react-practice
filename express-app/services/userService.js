@@ -29,24 +29,26 @@ async function saveUsers(users) {
 }
 
 /**
- * Find a user by username
- * @param {string} username - Username to search for
+ * Find a user by email
+ * @param {string} email - Email to search for
  * @returns {Promise<Object|null>} User object or null if not found
  */
-async function findUserByUsername(username) {
+async function findUserByEmail(email) {
   const users = await loadUsers();
-  return users.find((user) => user.username === username) || null;
+  return users.find((user) => user.email === email) || null;
 }
 
 /**
  * Create a new user
- * @param {string} username - Username for new user
+ * @param {string} email - Email for new user
  * @param {string} password - Plain text password to hash
+ * @param {string} firstName - User's first name
+ * @param {string} lastName - User's last name
  * @param {string} role - User role: 'user' (default) or 'admin'
  * @returns {Promise<Object>} Newly created user object (without password)
  * @throws {Error} If user already exists
  */
-async function createUser(username, password, role = 'user') {
+async function createUser(email, password, firstName, lastName, role = 'user') {
   // Validate role
   const validRoles = ['user', 'admin'];
   if (!validRoles.includes(role)) {
@@ -54,7 +56,7 @@ async function createUser(username, password, role = 'user') {
   }
 
   // Check if user already exists
-  const existingUser = await findUserByUsername(username);
+  const existingUser = await findUserByEmail(email);
   if (existingUser) {
     throw new Error('User already exists');
   }
@@ -65,7 +67,9 @@ async function createUser(username, password, role = 'user') {
   // Create new user object with role
   const newUser = {
     id: Date.now().toString(), // Simple ID generation
-    username,
+    email,
+    firstName,
+    lastName,
     password: hashedPassword,
     role,
     createdAt: new Date().toISOString(),
@@ -83,12 +87,12 @@ async function createUser(username, password, role = 'user') {
 
 /**
  * Validate user credentials (login)
- * @param {string} username - Username to validate
+ * @param {string} email - Email to validate
  * @param {string} password - Plain text password to check
  * @returns {Promise<Object|null>} User object (without password) if valid, null otherwise
  */
-async function validateUser(username, password) {
-  const user = await findUserByUsername(username);
+async function validateUser(email, password) {
+  const user = await findUserByEmail(email);
   if (!user) {
     return null;
   }
@@ -120,7 +124,7 @@ async function getAllUsers() {
 module.exports = {
   createUser,
   validateUser,
-  findUserByUsername,
+  findUserByEmail,
   getAllUsers,
   loadUsers,
   saveUsers,
