@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from "react-router";
 
-import { Button } from "@/components/ui/button/button";
+import { Button } from "@/components/ui/button";
 import { Form, Input } from "@/components/ui/form";
 import { paths } from "@/config/paths";
 import { useRegister, registerInputSchema } from "@/lib/auth";

@@ -1,4 +1,5 @@
 import { NavLink } from "react-router";
+import { ThemeToggle } from "@/features/theme";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const navigation = [
@@ -9,12 +10,10 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-screen">
-      <aside className="w-60 border-r bg-black text-white">
-        <div className="h-16 flex items-center px-4 font-bold">
-          Logo
-        </div>
+      <aside className="w-60 border-r bg-black text-white flex flex-col">
+        <div className="h-16 flex items-center px-4 font-bold">Logo</div>
 
-        <nav className="flex flex-col gap-2 p-2">
+        <nav className="flex flex-col gap-2 p-2 flex-1">
           {navigation.map((item) => (
             <NavLink
               key={item.name}
@@ -30,14 +29,16 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             </NavLink>
           ))}
         </nav>
+
+        <div className="border-t border-gray-700 p-2">
+          <ThemeToggle />
+        </div>
       </aside>
 
       {/* Main area */}
       <div className="flex flex-1 flex-col">
         {/* Header */}
-        <header className="h-14 border-b flex items-center px-4">
-          Header
-        </header>
+        <header className="h-14 border-b flex items-center px-4">Header</header>
 
         {/* Content */}
         <main className="flex-1 p-4">{children}</main>

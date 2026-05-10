@@ -43,10 +43,10 @@ const createAppRouter = () => {
         },
         {
           path: "feature-one",
-          loader: routeLoader, // this loader will run before rendering the FeatureOne component and its data will be available via useLoaderData in the component. this will be available only here and its children
           children: [
             {
               index: true,
+              loader: routeLoader, // this loader will run before rendering the FeatureOne component and its data will be available via useLoaderData in the component
               Component: FeatureOne,
             },
             {
