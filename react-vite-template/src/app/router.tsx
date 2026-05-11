@@ -2,14 +2,35 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import LandingRoute from "./routes/landing";
 import NotFoundRoute from "./routes/not-found";
 import AppRoot from "./routes/app/root";
-import { FeatureTwo } from "@/features/feature-two/feature-two";
-import { FeatureOne } from "@/features/feature-one/feature-one";
 import LoggingMiddleware from "./middleware/route-logging-middleware";
 import { routeLoader } from "./loader/route-loader";
 import { paths } from "@/config/paths";
-import RegisterRoute from "./routes/auth/register";
-import LoginRoute from "./routes/auth/login";
 import { ProtectedRoute } from "@/lib/auth";
+import React from "react";
+
+const FeatureOne = React.lazy(() =>
+  import("@/features/feature-one/feature-one").then((module) => ({
+    default: module.FeatureOne,
+  })),
+);
+
+const FeatureTwo = React.lazy(() =>
+  import("@/features/feature-two/feature-two").then((module) => ({
+    default: module.FeatureTwo,
+  })),
+);
+
+const RegisterRoute = React.lazy(() =>
+  import("./routes/auth/register").then((module) => ({
+    default: module.default,
+  })),
+);
+
+const LoginRoute = React.lazy(() =>
+  import("./routes/auth/login").then((module) => ({
+    default: module.default,
+  })),
+);
 
 const ProtectedAppRoot = () => (
   // component composition

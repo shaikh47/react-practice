@@ -24,7 +24,7 @@ Conditional Rendering: Early returns, Ternary operators, Logical AND, Nullish co
 
 Form Handling: React Hook Form, Form validation, Controlled components
 
-Routing: Router setup, Route configuration, Nested routes, Protected routes, Loaders, Route middleware
+Routing: Router setup, Route configuration, Nested routes, Protected routes, Loaders, Route middlewarem Lazy loading with suspense
 
 Advanced Patterns: Error boundaries, Component composition, forwardRef, TypeScript types, Callback props
 
